@@ -16,11 +16,11 @@ public class ViewDepartamento {
 				"0. Salir",
 				"\n1. Añadir departamento",  
 				"\n2. Añadir empleado al departamento",
-				"\n4. Mostrar todo", 
-				"\n5. Buscar por nombre", 
-				"\n6. Buscar por ID", 
-				"\n7. Modificar jefe",
-				"\n8. Borrar"); 
+				"\n3. Mostrar todo", 
+				"\n4. Buscar por nombre", 
+				"\n5. Buscar por ID", 
+				"\n6. Modificar jefe",
+				"\n7. Borrar"); 
 				
 		while (true) {
 			IO.println(opciones);

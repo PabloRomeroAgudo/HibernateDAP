@@ -1,13 +1,10 @@
 package view;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import controller.GestionController;
 import dao.ProyectoDAOImpl;
 import io.IO;
-import models.Empleado;
 import models.Proyecto;
 
 public class ViewProyecto {

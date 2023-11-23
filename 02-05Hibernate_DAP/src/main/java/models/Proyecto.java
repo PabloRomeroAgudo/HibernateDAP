@@ -32,6 +32,18 @@ public class Proyecto {
 	
 	@ManyToMany(mappedBy = "proyectos")
 	private Set<Empleado> empleados;
-	
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Proyecto [id=" + this.getId() + ", nombre=" + this.getNombre() + ", id_empleados=[");
+		if(this.getEmpleados() != null) {
+			for (Empleado empleado : empleados) {
+				sb.append(empleado.getId() + ", ");
+			}
+		}
+		sb.append("]]");
 		
+		return sb.toString();
+	}
 }

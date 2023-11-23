@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +25,12 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
 		Empleado emp = manager.find(Empleado.class, id);
 		Departamento depToAdd = manager.find(Departamento.class, departamento);
 		emp.setDepartamento(depToAdd);
+		//Set<Empleado> emps = depToAdd.getEmpleados() != null ? depToAdd.getEmpleados() : new HashSet<>();
+		//emps.add(emp);
+		//depToAdd.setEmpleados(emps);
+		
 		manager.merge(emp);
+		//manager.merge(depToAdd);
 		manager.getTransaction().commit();
 		
 		return depToAdd != null;
@@ -34,7 +40,7 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
 	public Boolean addProjectToEmp(Integer id, Integer project) {
 		manager.getTransaction().begin();
 		Empleado emp = manager.find(Empleado.class, id);
-		Set<Proyecto> proyectitos = emp.getProyectos();
+		Set<Proyecto> proyectitos = emp.getProyectos() != null ? emp.getProyectos() : new HashSet<>();
 		Proyecto projectToAdd = manager.find(Proyecto.class, project);
 		proyectitos.add(projectToAdd);
 		emp.setProyectos(proyectitos);
@@ -83,7 +89,10 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
 	public Boolean delete(Empleado entity) {
 		manager.getTransaction().begin();
 		Empleado emp = manager.find(Empleado.class, entity.getId());
+		Departamento dep = manager.find(Departamento.class, emp.getDepJefe().getId());
+		dep.setJefe(null);
 		manager.remove(emp);
+		manager.merge(dep);
 		manager.getTransaction().commit();
 		
 		return emp != null;

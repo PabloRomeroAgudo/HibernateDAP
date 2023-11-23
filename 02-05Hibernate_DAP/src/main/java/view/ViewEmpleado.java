@@ -5,7 +5,6 @@ import java.util.List;
 import controller.GestionController;
 import dao.EmpleadoDAOImpl;
 import io.IO;
-import models.Departamento;
 import models.Empleado;
 
 public class ViewEmpleado {

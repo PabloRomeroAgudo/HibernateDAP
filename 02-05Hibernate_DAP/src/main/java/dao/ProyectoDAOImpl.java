@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +45,7 @@ public class ProyectoDAOImpl implements ProyectoDAO {
 	public Boolean updateAux(Integer id, Integer empleado) {
 		manager.getTransaction().begin();
 		Proyecto project = manager.find(Proyecto.class, id);
-		Set<Empleado> empleaditos = project.getEmpleados();
+		Set<Empleado> empleaditos = project.getEmpleados() != null ? project.getEmpleados() : new HashSet<>();
 		Empleado empToAdd = manager.find(Empleado.class, empleado);
 		empleaditos.add(empToAdd);
 		project.setEmpleados(empleaditos);

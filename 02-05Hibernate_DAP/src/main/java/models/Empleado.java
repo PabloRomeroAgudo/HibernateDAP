@@ -50,9 +50,18 @@ public class Empleado {
 
 	@Override
 	public String toString() {
-		return "Empleado [id=" + id + ", nombre=" + nombre + ", salario=" + salario + ", depJefe=" + depJefe
-				+ ", departamento=" + departamento + "]";
+		StringBuffer sb = new StringBuffer();
+		sb.append("Empleado [id=" + this.getId() + ", nombre=" + this.getNombre() + ", salario=" + this.getSalario() 
+				+ ", depJefe=" + (this.getDepJefe() != null ? this.getDepJefe().getId() : "null")
+				+ ", departamento=" + (this.getDepartamento() != null ? this.getDepartamento().getId() : "null")
+				+ ", proyectos[");
+		if (this.getProyectos() != null) {
+			for (Proyecto proyecto : proyectos) {
+				sb.append(proyecto.getId() + ", ");
+			}			
+		}
+		sb.append("]]");
+		
+		return sb.toString();
 	}
-	
-	
 }

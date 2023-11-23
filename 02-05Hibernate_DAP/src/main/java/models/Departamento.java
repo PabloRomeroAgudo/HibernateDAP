@@ -38,5 +38,21 @@ public class Departamento {
 	@OneToMany(mappedBy = "departamento")
 	private Set<Empleado> empleados;
 
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Departamento [id=" + this.getId() + ", nombre=" + this.getNombre() 
+		+ ", jefe=" + (this.getJefe() != null ? this.getJefe().getId() : "null") 
+		+ ", empleados=[");
+		if (this.getEmpleados() != null) {
+			for (Empleado empleado : empleados) {
+				sb.append(empleado.getId() + ", ");
+			}
+		}
+		sb.append("]]");
+		
+		return sb.toString();
+	}
+
 	
 }
