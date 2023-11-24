@@ -26,9 +26,10 @@ public class DepartamentoDAOImpl implements DepartamentoDAO{
 		Empleado empToAdd = manager.find(Empleado.class, empleado);
 		empleaditos.add(empToAdd);
 		dep.setEmpleados(empleaditos);
-		//empToAdd.setDepartamento(dep);
+		empToAdd.setDepartamento(dep);
+		
 		manager.merge(dep);
-		//manager.merge(empToAdd);
+		manager.merge(empToAdd);
 		manager.getTransaction().commit();
 		
 		return empToAdd != null;
@@ -75,15 +76,14 @@ public class DepartamentoDAOImpl implements DepartamentoDAO{
 	public Boolean delete(Departamento entity) {
 		manager.getTransaction().begin();
 		Departamento dep = manager.find(Departamento.class, entity.getId());
-		manager.remove(dep);
-		
-		List<Integer> emps = manager.createQuery("SELECT id FROM Empleado WHERE departamento=:id_depart").setParameter("id_depart", dep.getId()).getResultList();
+		List<Integer> emps = manager.createQuery("SELECT id FROM Empleado WHERE departamento=:departamento").setParameter("departamento", dep).getResultList();
 		for (Integer id : emps) {
 			Empleado e = manager.find(Empleado.class, id);
 			e.setDepartamento(null);
 			manager.merge(e);
 		}
 		
+		manager.remove(dep);
 		manager.getTransaction().commit();
 		
 		return dep != null;

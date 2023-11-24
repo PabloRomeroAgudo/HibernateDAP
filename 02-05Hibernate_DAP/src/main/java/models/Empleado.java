@@ -1,9 +1,11 @@
 package models;
 
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,12 +46,13 @@ public class Empleado {
 	private Departamento departamento;
 	
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Proyecto> proyectos;
 
 
 	@Override
 	public String toString() {
+		Integer cont = 1;
 		StringBuffer sb = new StringBuffer();
 		sb.append("Empleado [id=" + this.getId() + ", nombre=" + this.getNombre() + ", salario=" + this.getSalario() 
 				+ ", depJefe=" + (this.getDepJefe() != null ? this.getDepJefe().getId() : "null")
@@ -57,11 +60,34 @@ public class Empleado {
 				+ ", proyectos[");
 		if (this.getProyectos() != null) {
 			for (Proyecto proyecto : proyectos) {
-				sb.append(proyecto.getId() + ", ");
+				sb.append(proyecto.getId());
+				if (cont != proyectos.size()) {
+					sb.append(", ");
+				}
+				cont++;
 			}			
 		}
 		sb.append("]]");
 		
 		return sb.toString();
 	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Empleado))
+			return false;
+		Empleado empleado = (Empleado) o;
+		return id.equals(empleado.id) && nombre.equals(empleado.nombre) && salario.equals(empleado.salario);
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nombre, salario);
+	}
+	
+	
 }

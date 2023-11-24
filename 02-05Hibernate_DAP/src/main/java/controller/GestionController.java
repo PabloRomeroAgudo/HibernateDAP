@@ -38,7 +38,7 @@ public class GestionController {
     
     public Boolean addProjectToEmp(Integer id, Integer project) {
     	logger.info("Añadiendo proyecto a empleado");
-    	return empleadoDAO.addDepToEmp(id, project);
+    	return empleadoDAO.addProjectToEmp(id, project);
     }
     
     public List<Empleado> getEmpleadoByName(String init) {

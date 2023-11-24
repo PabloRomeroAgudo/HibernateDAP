@@ -24,13 +24,14 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
 		manager.getTransaction().begin();
 		Empleado emp = manager.find(Empleado.class, id);
 		Departamento depToAdd = manager.find(Departamento.class, departamento);
+		Set<Empleado> emps = depToAdd.getEmpleados() != null ? depToAdd.getEmpleados() : new HashSet<>();
+		emps.add(emp);
+		//emps.stream().map(empleado -> empleado = Empleado.builder().id(empleado.getId()).build());
+		depToAdd.setEmpleados(emps);
 		emp.setDepartamento(depToAdd);
-		//Set<Empleado> emps = depToAdd.getEmpleados() != null ? depToAdd.getEmpleados() : new HashSet<>();
-		//emps.add(emp);
-		//depToAdd.setEmpleados(emps);
 		
 		manager.merge(emp);
-		//manager.merge(depToAdd);
+		manager.merge(depToAdd);
 		manager.getTransaction().commit();
 		
 		return depToAdd != null;
@@ -44,7 +45,13 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
 		Proyecto projectToAdd = manager.find(Proyecto.class, project);
 		proyectitos.add(projectToAdd);
 		emp.setProyectos(proyectitos);
+		
+		Set<Empleado> empleaditos = projectToAdd.getEmpleados() != null ? projectToAdd.getEmpleados() : new HashSet<>();
+		empleaditos.add(emp);
+		projectToAdd.setEmpleados(empleaditos);
+		
 		manager.merge(emp);
+		manager.merge(projectToAdd);
 		manager.getTransaction().commit();
 		
 		return projectToAdd != null;
